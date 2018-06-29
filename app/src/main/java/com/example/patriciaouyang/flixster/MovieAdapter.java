@@ -1,6 +1,7 @@
 package com.example.patriciaouyang.flixster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +16,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.patriciaouyang.flixster.models.Config;
 import com.example.patriciaouyang.flixster.models.Movie;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
@@ -39,6 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View movieView = inflater.inflate(R.layout.item_movie, parent, false);
+        ButterKnife.bind(this, movieView);
         return new ViewHolder(movieView);
     }
 
@@ -76,20 +81,39 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivPosterImage;
         ImageView ivBackdropImage;
         TextView tvTitle;
         TextView tvOverview;
 
+        //@BindView(R.id.ivPosterImage) ImageView ivPosterImage;
+        //@BindView(R.id.ivBackdropImage) ImageView ivBackdropImage;
+        //@BindView(R.id.tvTitle) TextView tvTitle;
+        //@BindView(R.id.tvOverview) TextView tvOverview;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            //ButterKnife.bind(this, itemView);
 
             ivPosterImage = (ImageView) itemView.findViewById(R.id.ivPosterImage);
             ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Movie movie = movies.get(position);
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                context.startActivity(intent);
+            }
         }
     }
 }

@@ -7,8 +7,16 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.loopj.android.http.AsyncHttpClient;
 
 public class MovieTrailerActivity extends YouTubeBaseActivity {
+
+    public final static String API_BASE_URL = "https://api.themoviedb.org/3";
+    public final static String YT_API_KEY_PARAM = "yt_api_key";
+    public final static String TAG = "MovieTrailerActivity";
+
+    AsyncHttpClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,5 +36,9 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
                 Log.e("MovieTrailerActivity", "Error initializing YouTube player");
             }
         });
+    }
+
+    private void getMovieTrailer() {
+
     }
 }

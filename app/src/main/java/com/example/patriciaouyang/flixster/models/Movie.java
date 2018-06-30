@@ -11,6 +11,7 @@ public class Movie {
     String posterPath; //only path not full url
     String backdropPath;
     Double voteAverage;
+    Integer id;
 
     public Movie() {}
 
@@ -20,6 +21,7 @@ public class Movie {
         posterPath = object.getString("poster_path");
         backdropPath = object.getString("backdrop_path");
         voteAverage = object.getDouble("vote_average");
+        id = object.getInt("id");
 
     }
 
